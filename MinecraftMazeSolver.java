@@ -225,7 +225,7 @@ public class MinecraftMazeSolver extends JFrame {
         panel.add(startBtn, gbc);
         
         // Credits
-        JLabel credits = new JLabel("Created with ❤ for Pathfinding Visualization");
+        JLabel credits = new JLabel("Created By Azizah And Hilman for Pathfinding Visualization");
         credits.setFont(new Font("Courier New", Font.ITALIC, 11));
         credits.setForeground(new Color(180, 180, 180));
         gbc.gridy = 5;
@@ -341,7 +341,7 @@ public class MinecraftMazeSolver extends JFrame {
         JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         statusPanel.setBackground(new Color(139, 90, 43));
         
-        statusLabel = new JLabel("Click 'Generate New Maze' to begin.");
+        statusLabel = new JLabel("Let's Start!");
         statusLabel.setFont(new Font("Courier New", Font.BOLD, 12));
         statusLabel.setForeground(Color.WHITE);
         
