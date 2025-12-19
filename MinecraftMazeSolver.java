@@ -2,6 +2,8 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 import javax.swing.*;
+import javax.sound.sampled.*;
+import java.io.File;
 
 public class MinecraftMazeSolver extends JFrame {
     private static final int CELL_SIZE = 30;
@@ -9,7 +11,7 @@ public class MinecraftMazeSolver extends JFrame {
     
     private CardLayout cardLayout;
     private JPanel mainContainer;
-    
+
     private MazePanel mazePanel;
     private JComboBox<String> explorationSelector;
     private JComboBox<String> solutionSelector;
@@ -29,6 +31,7 @@ public class MinecraftMazeSolver extends JFrame {
     private String selectedSolution;
     
     private boolean mazeGenerated = false;
+    private Clip backgroundMusic;
 
     // Cell types
     private static final int WALL = 0;
@@ -57,6 +60,8 @@ public class MinecraftMazeSolver extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setResizable(false);
+
+        playBackgroundMusic("sound/Minecraft_BG.wav");
     }
     
     // ========== HALAMAN WELCOME ==========
@@ -1068,6 +1073,30 @@ public class MinecraftMazeSolver extends JFrame {
             g.drawLine(x + 14, y + 13, x + 16, y + 10);
             g.drawLine(x + 15, y + 25, x + 13, y + 28);
             g.drawLine(x + 25, y + 25, x + 27, y + 28);
+        }
+    }
+    private void playBackgroundMusic(String filePath) {
+        try {
+            File musicPath = new File(filePath);
+            if (musicPath.exists()) {
+                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+                backgroundMusic = AudioSystem.getClip();
+                backgroundMusic.open(audioInput);
+
+                // Mengatur agar musik berputar terus menerus (loop)
+                backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
+
+                // Memulai pemutaran
+                backgroundMusic.start();
+
+                // Opsional: Turunkan volume sedikit agar tidak terlalu keras
+                FloatControl gainControl = (FloatControl) backgroundMusic.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(-15.0f); // Mengurangi volume sebesar 15 desibel
+            } else {
+                System.out.println("File musik tidak ditemukan di: " + filePath);
+            }
+        } catch (Exception e) {
+            System.out.println("Gagal memutar musik: " + e.getMessage());
         }
     }
 
